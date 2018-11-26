@@ -5,6 +5,8 @@
 class Poneys
 {
     private $_count = 8;
+    private $_MAX_PLACES = 15;
+
 
     /**
      * Retourne le nombre de poneys
@@ -17,6 +19,18 @@ class Poneys
     }
 
     /**
+     * Ajoute un poney du champ
+     *
+     * @param int $number Nombre de poneys à ajouter
+     *
+     * @return void
+     */
+    public function addPoneyFromField(int $number): void
+    {
+        $this->_count += $number;
+    }
+
+    /**
      * Retire un poney du champ
      *
      * @param int $number Nombre de poneys à retirer
@@ -25,7 +39,13 @@ class Poneys
      */
     public function removePoneyFromField(int $number): void
     {
-        $this->_count -= $number;
+        if (($this->_count - $number) < 0) {
+            throw new Exception('Quantité négative');
+        }
+        else {
+            $this->_count -= $number;
+        }
+
     }
 
     /**
@@ -35,6 +55,22 @@ class Poneys
      */
     public function getNames(): array
     {
+
+    }
+
+    /**
+     * Renvoie TRUE si des places disponibles (FALSE sinon)
+     *
+     * @return boolean
+     */
+    public function getRemainingPlaces(): boolean
+    {
+        if ($this->_count < $this->_MAX_PLACES) {
+            return TRUE;
+        }
+        else  {
+            return FALSE;
+        }
 
     }
 }
